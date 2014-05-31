@@ -14,7 +14,6 @@ use Date::Manip qw(ParseDate);
 use DateTime::Event::Zodiac qw(zodiac_date_name);
 
 zci answer_type => "zodiac";
-zci is_cached => 1;
 
 #File MetaData
 primary_example_queries 	"zodiac 21st June";
