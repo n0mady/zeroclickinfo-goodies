@@ -78,7 +78,9 @@ ddg_goodie_test(
 		#Test Invalid Inputs
 		'Zodiac 21.05.1965'			=> undef,
 		'31st April 1876 zodiac'	=> undef,
-		'31Feb'						=> undef				
+		'Zodiac 31Feb'				=> undef,
+		'Zodiac 5thMay1200'			=> undef,
+		'31.12.2100 zodiac'			=> undef
 
 );
 
