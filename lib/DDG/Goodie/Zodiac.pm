@@ -30,28 +30,28 @@ attribution	email		=> 'nomady@zoho.com',
 handle remainder => sub {
 	
 		#User Entered Date/Query
-		my $Query=$_;								
+		my $query=$_;								
 		
 		#Parse the Given Date String
-		my $Date=&ParseDate($Query);
+		my $date=&ParseDate($query);
 		
 		#Return Nothing if the User Provided Date is Invalid	
-		if($Date eq ""){return;} 
+		if($date eq ""){return;} 
 	
-		my $ZodiacDate=DateTime->new(
+		my $zodiacdate=DateTime->new(
 		
 		#Extract the Year from Date String
-		year=>substr($Date,0,4),
+		year=>substr($date,0,4),
 
 		#Extract the Month from Date String
-		month=>substr($Date,4,2),
+		month=>substr($date,4,2),
 		
 		#Extract the Day from Date String
-		day=>substr($Date,6,2)		
+		day=>substr($date,6,2)		
 		);					
 
 		#Return the Star Sign
-		return "Star Sign : ",zodiac_date_name($ZodiacDate);
+		return "Star Sign : ",zodiac_date_name($zodiacdate);
 };
 
 1;
