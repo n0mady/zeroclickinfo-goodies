@@ -15,7 +15,7 @@ use DateTime::Event::Zodiac qw(zodiac_date_name);
 
 zci answer_type => "zodiac";
 
-triggers startend	=> "zodiac","zodiac sign,""starsign","star sign";
+triggers startend => "zodiac","zodiac sign,""starsign","star sign";
 
 #File MetaData
 primary_example_queries "zodiac 21st June";
