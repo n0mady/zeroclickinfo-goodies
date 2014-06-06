@@ -36,7 +36,7 @@ handle remainder => sub {
 		my $date=&ParseDate($query);
 		
 		#Return Nothing if the User Provided Date is Invalid	
-		if($date eq ""){return;} 
+		return if $date eq "";
 	
 		my $zodiacdate=DateTime->new(
 		
