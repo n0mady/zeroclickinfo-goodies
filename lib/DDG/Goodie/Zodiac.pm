@@ -24,8 +24,8 @@ description	"Find the Zodiac Sign for the Respective Date given as Input based o
 name "zodiac";
 category "special";
 topics "science";
-attribution	email		=> 'nomady@zoho.com',
-			github 		=> ['https://github.com/n0mady','NOMADY'];
+attribution email => 'nomady@zoho.com',
+	    github => ['https://github.com/n0mady','NOMADY'];
 			
 handle remainder => sub {
 	
@@ -40,14 +40,14 @@ handle remainder => sub {
 	
 		my $zodiacdate=DateTime->new(
 		
-		#Extract the Year from Date String
-		year=>substr($date,0,4),
+			#Extract the Year from Date String
+			year=>substr($date,0,4),
 
-		#Extract the Month from Date String
-		month=>substr($date,4,2),
+			#Extract the Month from Date String
+			month=>substr($date,4,2),
 		
-		#Extract the Day from Date String
-		day=>substr($date,6,2)		
+			#Extract the Day from Date String
+			day=>substr($date,6,2)		
 		);					
 
 		#Return the Star Sign
