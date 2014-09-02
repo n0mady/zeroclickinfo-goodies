@@ -1,4 +1,5 @@
 package DDG::Goodie::Fortune;
+# ABSTRACT: UNIX fortune quips.
 
 use DDG::Goodie;
 use Fortune;
@@ -16,13 +17,14 @@ attribution github => ['https://github.com/frncscgmz', 'frncscgmz'];
 zci is_cached => 0;
 zci answer_type => "fortune";
 
+my $ffile = share('fortunes');
+my $fortune_file = Fortune->new($ffile);
+$fortune_file->read_header();
+
 handle remainder => sub {
-   my $ffile = share('fortunes');
-   my $fortune_file = Fortune->new($ffile);
-   $fortune_file->read_header();
-   my $output = $fortune_file->get_random_fortune();
-   $output =~ s/\n//g;
-   return $output;
+    my $output = $fortune_file->get_random_fortune();
+    $output =~ s/\n//g;
+    return $output;
 };
 
 1;

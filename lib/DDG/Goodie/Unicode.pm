@@ -1,6 +1,8 @@
 package DDG::Goodie::Unicode;
+# ABSTRACT: unicode character information lookup
 
 use DDG::Goodie;
+
 use Unicode::UCD qw/charinfo/;
 use Unicode::Char ();              # For name -> codepoint lookup
 use Encode qw/encode_utf8/;
@@ -16,7 +18,7 @@ topics 'programming';
 
 
 use constant {
-    CODEPOINT_RE => qr/^ \s* (?:U \+|\\(?:u|x)) (?<codepoint> [a-f0-9]{4,6}) \s* $/xi,
+    CODEPOINT_RE => qr/^ \s* (?:U \+|\\(?:u|x{(?=.*}))) (?<codepoint> [a-f0-9]{4,6})}? \s* $/xi,
     NAME_RE      => qr/^ (?<name> [A-Z][A-Z\s]+) $/xi,
     CHAR_RE      => qr/^ \s* (?<char> .) \s* $/x,
     UNICODE_RE   => qr/^ unicode \s+ (.+) $/xi,

@@ -1,8 +1,9 @@
 package DDG::Goodie::TitleCase;
+# ABSTRACT: Convert a string to title case.
 
 use DDG::Goodie;
 
-triggers startend => 'titlecase', 'ucfirst', 'title case';
+triggers startend => 'titlecase', 'ucfirst', 'title case', 'capitalize';
 
 primary_example_queries 'titlecase test';
 description 'return the query in title case';

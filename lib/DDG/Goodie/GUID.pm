@@ -1,4 +1,5 @@
 package DDG::Goodie::GUID;
+# ABSTRACT: Generated a GUID on-demand.
 
 use DDG::Goodie;
 use Data::GUID;
@@ -6,6 +7,7 @@ use Data::GUID;
 triggers start => 'globally', 'universally', 'rfc', 'guid', 'uuid';
 
 zci answer_type => "guid";
+zci is_cached => 0;
 
 primary_example_queries 'guid';
 secondary_example_queries 'uuid';

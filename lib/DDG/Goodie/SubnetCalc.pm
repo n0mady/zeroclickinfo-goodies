@@ -1,6 +1,7 @@
 #!/bin/env perl
 package DDG::Goodie::SubnetCalc;
 # ABSTRACT: Calculate IP ranges & Subnet Information from a host & CIDR or netmask 
+
 use strict;
 use warnings;
 
@@ -98,10 +99,12 @@ handle query => sub {
     
     sub to_html {
 	my $results = "";
+    my $minwidth = "70px";
 	foreach my $result (@_) {
-	    $results .= "<div><i>$result->[0]: </i>$result->[1]</div>";
+	    $results .= "<div><span class=\"subnet__label text--secondary\">$result->[0]: </span><span class=\"text--primary\">$result->[1]</span></div>";
+        $minwidth = "140px" if $result->[0] eq "Host Address Range";
 	}
-	return $results;
+	return $results . "<style> .zci--answer .subnet__label {display: inline-block; min-width: $minwidth}</style>";
     }
 
     sub to_text {
