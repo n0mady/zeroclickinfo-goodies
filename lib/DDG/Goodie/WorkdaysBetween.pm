@@ -13,6 +13,7 @@ use Date::Calendar::Profiles qw($Profiles);
 triggers start => "workdays between", "business days between", "work days between", "working days", "workdays from";
 
 zci answer_type => "workdays_between";
+zci is_cached   => 0;
 
 primary_example_queries 'workdays between 01/31/2000 01/31/2001';
 description 'Calculate the number of workdays between two dates. Does not consider holidays.';
@@ -20,18 +21,19 @@ name 'WorkDaysBetween';
 code_url 'https://github.com/duckduckgo/zeroclickinfo-goodies/blob/master/lib/DDG/Goodie/WorkdaysBetween.pm';
 category 'calculations';
 topics 'everyday';
-attribution github => ['http://github.com/mgarriott', 'mgarriott'];
+attribution github => ['http://github.com/mgarriott', 'Matt Garriott'];
 
-my $date_regex = date_regex();
+my $datestring_regex = datestring_regex();
 
 handle remainder => sub {
     my $query = $_;
-    return unless $query =~ qr/($date_regex) (?:(?:and|to) )?($date_regex)/i;
-    
-    my ($start_date, $end_date) = parse_all_strings_to_date($1, $2);
+
+    return unless ($query =~ qr/($datestring_regex) (?:(?:and|to) )?($datestring_regex)/i);
+    my ($start_date, $end_date) = parse_all_datestrings_to_date($1, $2);
+
     return unless ($start_date && $end_date);
 
-    ($start_date, $end_date) = ($end_date, $start_date) if ( DateTime->compare($start_date, $end_date) == 1 );
+    ($start_date, $end_date) = ($end_date, $start_date) if (DateTime->compare($start_date, $end_date) == 1);
 
     my $calendar = Date::Calendar->new($Profiles->{US});
     my $workdays = $calendar->delta_workdays($start_date->year(), $start_date->month(), $start_date->day(), $end_date->year(), $end_date->month(), $end_date->day(), 1, 1);
@@ -40,9 +42,14 @@ handle remainder => sub {
     my $end_str   = date_output_string($end_date);
 
     my $verb = $workdays == 1 ? 'is' : 'are';
-    my $number = $workdays == 1 ? 'workday' : 'workdays';
+    my $number = $workdays == 1 ? 'Workday' : 'Workdays';
 
-    return "There $verb $workdays $number between $start_str and $end_str.";
+    return "There $verb $workdays $number between $start_str and $end_str.",
+      structured_answer => {
+        input     => [$start_str, $end_str],
+        operation => "$number between",
+        result    => $workdays
+      };
 };
 
 1;

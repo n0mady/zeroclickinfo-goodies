@@ -13,7 +13,7 @@ code_url 'https://github.com/duckduckgo/zeroclickinfo-goodies/blob/master/lib/DD
 category 'cheat_sheets';
 topics 'sysadmin';
 
-attribution github => ['https://github.com/warthurton', 'warthurton'];
+attribution github => ['warthurton', 'Wayne Arthurton'];
 
 triggers end => "public dns", "dns server", "dns servers";
 
@@ -75,7 +75,7 @@ my $table_spacer =
 
 # Actually build the output.. finally!
 my $text = $table_spacer;
-my $html = '<style type="text/css">' . scalar share("style.css")->slurp . '</style><table class="publicdns">';
+my $html = '<table class="publicdns">';
 
 # First the headers
 $text .= join('', map { $_->{text_spacer}->($_->{title}) } @display_cols);

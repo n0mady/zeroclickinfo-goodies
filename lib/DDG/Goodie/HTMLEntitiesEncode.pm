@@ -207,12 +207,6 @@ my %accented_chars = (
     'Uacute' => [['U-acute','Uacute']],
 );
 
-my $css = share("style.css")->slurp();
-sub append_css {
-    my $html = shift;
-    return "<style type='text/css'>$css</style>\n" . $html;
-};
-
 sub make_text {
     # Returns a text string of the form: "Encoded HTML Entity: <<entity>>"
     my $text = "";
@@ -249,12 +243,13 @@ category                    'cheat_sheets';
 topics                      'programming', 'web_design';
 code_url                    'https://github.com/duckduckgo/zeroclickinfo-spice/blob/master/lib/DDG/Goodie/HTMLEntitiesEncode.pm';
 zci answer_type =>          'html_entity';
+zci is_cached   =>          1;
 
 attribution web     =>      ["http://nishanths.github.io", "Nishanth Shanmugham"],
             github  =>      ["https://github.com/nishanths", "Nishanth Shanmugham"],
             twitter =>      ["https://twitter.com/nshanmugham", "Nishanth Shanmugham"],
-            twitter =>      'crazedpsyc',
-            cpan    =>      'CRZEDPSYC' ;
+            twitter =>      ['crazedpsyc','crazedpsyc'],
+            cpan    =>      ['CRZEDPSYC','crazedpsyc'];
 
 handle remainder => sub {
     # General query cleanup
@@ -280,7 +275,7 @@ handle remainder => sub {
             $key = $hashes_query;
             $value = $accented_chars{$key};
         # Not an accented character -- lookup the $codes hash instead
-        } else { 
+        } else {
             $key = lc $hashes_query;
             $value = $codes{$key};
         }
@@ -294,7 +289,6 @@ handle remainder => sub {
         if (defined $value) {
             my $text = make_text($value);
             my $html = make_html($value);
-            $html = append_css($html);
             return $text, html => $html;
         }
     }
@@ -310,13 +304,12 @@ handle remainder => sub {
             $entity = '#' . $entity; # dress it up like a decimal
         }
         # Remove '&' and ';' from the output of html_enc(), these will be added in html
-        $entity =~ s/^&//g; 
+        $entity =~ s/^&//g;
         $entity =~ s/;$//g;
         # Make final answer
         my $answer = [[$_, $entity]];
         my $text = make_text($answer);
         my $html = make_html($answer);
-        $html = append_css($html);
         return $text, html => $html;
     }
 

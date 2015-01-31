@@ -16,22 +16,22 @@ ddg_goodie_test(
         )],
 
         # Check trigger kicks in.
-        'throw dice' => test_zci(qr/^., .$/, 
+        'throw dice' => test_zci(qr/^., .$/,
                 html => qr/./,
                 heading => $heading
         ),
-        'roll dice' => test_zci(qr/^., .$/, 
+        'roll dice' => test_zci(qr/^., .$/,
                 html => qr/./,
                 heading => $heading
         ),
-        'throw die' => test_zci(qr/^.$/, 
+        'throw die' => test_zci(qr/^.$/,
                 html => qr/./,
                 heading => $heading
         ),
 
 
         # Simple "dice" query
-        "roll 5 dice" => test_zci(qr/., ., ., ., .$/, 
+        "roll 5 dice" => test_zci(qr/., ., ., ., .$/,
                 html => qr/./,
                 heading => $heading
         ),
@@ -81,11 +81,11 @@ ddg_goodie_test(
                 html => qr/./,
                 heading => $heading
         ),
-        "roll 2d6 and 3d12 - 4" => test_zci(qr/^\d (\+|-) \d = \d+<br\/>\d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} = \d+<br\/>Total: \d+$/,
+        "roll 2d6 and 3d12 - 4" => test_zci(qr/^\d (\+|-) \d = \d+<br\/>\d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} = -?\d+<br\/>Total: \d+$/,
                 html => qr/./,
                 heading => $heading
         ),
-        "throw 3d12 - 4 and 2d6" => test_zci(qr/^\d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} = \d{1,2}<br\/>\d (\+|-) \d = \d+<br\/>Total: \d+$/,
+        "throw 3d12 - 4 and 2d6" => test_zci(qr/^\d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} (\+|-) \d{1,2} = -?\d{1,2}<br\/>\d (\+|-) \d = \d+<br\/>Total: \d+$/,
                 html => qr/./,
                 heading => $heading
         ),
@@ -117,10 +117,10 @@ ddg_goodie_test(
 
         # Check the HTML. Just once for a longhand query.
         "throw die" => test_zci(qr/^.$/,
-                html =>  qr/<span style="font-size:2em;">.<\/span><span style="white-space: nowrap; font-size:2em;"> = \d+<\/span><\/br>/,
+                html =>  qr/<span class="zci--dice-die">.<\/span><span class="zci--dice-sum"> = \d+<\/span><\/br>/,
                 heading => $heading
         ),
-        
+
         'roll 3d12' => test_zci(
             qr/\d{1,2} \+ \d{1,2} \+ \d{1,2} = \d+/,
             heading => $heading,

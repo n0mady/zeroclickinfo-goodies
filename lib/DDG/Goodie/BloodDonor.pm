@@ -6,11 +6,12 @@ use DDG::Goodie;
 use strict;
 use warnings;
 
-triggers startend =>    'donor compatibility', 'donor', 'donors for', 
+triggers startend =>    'donor compatibility', 'donor', 'donors for',
                         'blood donor', 'blood donors for', 'blood donor for',
                         'blood type', 'blood compatibility', 'compatibility', 'blood donor compatibility';
 
 zci answer_type => "blood_donor";
+zci is_cached   => 1;
 
 primary_example_queries 'donor O+';
 secondary_example_queries 'donor AB+';
@@ -28,13 +29,6 @@ my %typeMap = (
     'B' => 'B,O',
 );
 
-sub apply_css($)
-{
-    my ($html) = @_;
-    my $css = scalar share('style.css')->slurp;
-    return "<style type='text/css'>$css</style>\n$html";
-}
-
 sub table_data {
     my ($label, $value) = @_;
     return "<tr><td class='text--secondary'>$label</td><td class='text--primary'>$value</td></tr>";
@@ -49,7 +43,7 @@ handle remainder => sub {
         my @criticalResults = ();
 
         return unless defined $typeMap{$type};
-      
+
         # ideally same Rh
         foreach our $donorType (split(",", $typeMap{$type})) {
             push(@idealResults, $donorType . $rh);
@@ -61,22 +55,22 @@ handle remainder => sub {
 
         my $output = '';
         my $html = "<table class='blooddonor'>";
-        
+
         my $idealStr = join(' or ', @idealResults);
         my $criticalStr = join(' or ', @criticalResults);
-        
+
         $output .= "Ideal donor: " . uc($_) . "\n";
         $output .= "Other donors: " . $idealStr . "\n";
         $html .= table_data("Ideal donor:", uc($_));
         $html .= table_data("Other donors:", $idealStr);
-        
+
         if($rh eq '+') {
             $output .= "Only if no Rh(+) found: " . $criticalStr . "\n";
             $html .= table_data("<i>Only if</i> no Rh(+) found:", $criticalStr);
         }
-        
+
         $html .= '</table>';
-        return $output, html => apply_css($html), heading => "Donors for blood type ".uc($_);
+        return $output, html => $html, heading => "Donors for blood type ".uc($_);
     }
     return;
 };

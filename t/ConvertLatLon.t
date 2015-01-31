@@ -38,7 +38,7 @@ ddg_goodie_test(
     #Should not trigger for impossible latitudes and longitudes
     '95º 4\' N as decimal' => undef,
     'convert 293.11 degrees to dms' => undef,
-    
+
     #Should not trigger for impossible combinations of sign and
     # cardinal direction
     '-71º 12\' 51" S as a decimal latitude' => undef,
@@ -52,9 +52,6 @@ ddg_goodie_test(
     'attack of the 50\' 4" woman' => undef,
     'is 39.75 degrees a fever' => undef,
     'convert 39.75 degrees to farenheit' => undef,
-
-    #Check for css
-    '71° 10\' 3" in decimal' => test_zci(qr/./, html => qr/css/),
 
     #Check for to-format name
     '16.5° S, 68.15° W dms' => test_zci(qr/./, html => qr/DMS/),

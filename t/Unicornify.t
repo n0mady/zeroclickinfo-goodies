@@ -13,12 +13,12 @@ ddg_goodie_test(
 	[qw(
 		DDG::Goodie::Unicornify
 		)],
-	'unicornify example@example.com' => 
+	'unicornify example@example.com' =>
 		test_zci('This is a unique unicorn for example@example.com:' . "\n" . 'Learn more at unicornify.appspot.com',
-		       heading =>  'example@example.com (Unicornify)',	
+		       heading =>  'example@example.com (Unicornify)',
 			html => 'This is a unique unicorn for example@example.com:'
 			.'<br /><a href="'.unicornify_url(email => 'example@example.com', size => 128).'">'
-			.'<img src="/iu/?u='.unicornify_url(email=>'example@example.com', size => 100).'" style="margin: 10px 0px 10px 20px; border-radius: 8px;" /></a>'
+			.'<img src="/iu/?u='.unicornify_url(email=>'example@example.com', size => 100).'" class="zci--unicornify-img" /></a>'
 			. 'Learn more at <a href="http://unicornify.appspot.com/">unicornify.appspot.com</a>'));
 
 done_testing;

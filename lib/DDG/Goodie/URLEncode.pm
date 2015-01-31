@@ -12,6 +12,7 @@ primary_example_queries     'url encode https://duckduckgo.com/' , 'encode url x
 secondary_example_queries   'http://arstechnica.com/ url escape', 'apple.com/mac/ escape url';
 
 zci answer_type =>          'encoded_url';
+zci is_cached   =>          1;
 
 name                        'URLEncode';
 description                 'Displays the percent-encoded url';
@@ -20,23 +21,24 @@ category                    'computing_tools';
 topics                      'programming', 'web_design';
 attribution twitter =>      ['nshanmugham', 'Nishanth Shanmugham'],
             web     =>      ['http://nishanths.github.io', 'Nishanth Shanmugham'],
-            github  =>      ['https://github.com/nishanths', 'Nishanth Shanmugham'];
+            github  =>      ['nishanths', 'Nishanth Shanmugham'];
 
-
-my $css = share("style.css")->slurp();
-sub append_css {
-    my $html = shift;
-    return "<style type='text/css'>$css</style>\n" . $html;
-};
 
 handle remainder => sub {
-    my $encoded_url = encodeURIComponent($_);
+    my $in = $_;
+
+    return unless $in;
+
+    my $encoded_url = encodeURIComponent($in);
 
     my $text = "Percent-encoded URL: $encoded_url";
-    my $html = qq(<div class="zci--urlencode"><span class="text--secondary">Percent-encoded URL: </span><span class="text--primary">$encoded_url</span></div>);
-    $html = append_css($html);
 
-    return $text, html => $html;
+    return $text,
+      structured_answer => {
+        input     => [html_enc($in)],
+        operation => 'URL percent-encode',
+        result    => html_enc($encoded_url),
+      };
 };
 
 1;
