@@ -32,6 +32,9 @@ handle remainder => sub {
 		#User Entered Date/Query
 		my $query=$_;								
 		
+		#Temp Variable
+		my $result;
+
 		#Parse the Given Date String
 		my $date=&ParseDate($query);
 		
@@ -51,7 +54,16 @@ handle remainder => sub {
 		);					
 
 		#Return the Star Sign
-		return "Star Sign : ",zodiac_date_name($zodiacdate);
+		$result = " Star Sign :",zodiac_date_name($zodiacdate);
+		return $result,
+			structured_answer => {
+			input	=> [html_enc[$query]],
+			operation => 'Star Sign'
+			result	=> html_enc(zodiac_date_name($zodiacdate))
+		};
+		
+
+
 };
 
 1;
